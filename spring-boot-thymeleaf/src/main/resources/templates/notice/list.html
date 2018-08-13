@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<title>Notice</title>
+<link href="/css/pagination.css" rel="stylesheet" type="text/css">
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="/js/pagination.js"></script>
+<script>
+	$(function() {
+		$('#pagination').pagination({
+			dataSource : function(done) {
+				$.get('/notice/listAjax', function(response) {
+					done(response);
+				});
+			},
+			pageSize : 5,
+			autoHidePrevious : true,
+			autoHideNext : true,
+			callback : function(response, pagination) {
+				var dataHtml = '';
+				$.each(response, function(index, item) {
+					dataHtml += '<tr>';
+					dataHtml += '	<td>' + item.brdNo + '</td>';
+					dataHtml += '	<td><a href="/notice/read?brdNo=' + item.brdNo + '">' + item.brdTitle + '</a></td>';
+					dataHtml += '	<td>' + item.brdWriter + '</td>';
+					dataHtml += '	<td>' + item.brdDate + '</td>';
+					dataHtml += '</tr>';
+				});
+				$('.data-container').html(dataHtml);
+			}
+		});
+	});
+</script>
+</head>
+<body>
+<section layout:fragment="content">
+	<a th:href="@{/notice/form}">글쓰기</a>
+	<table border="1" style="width: 600px">
+		<caption>게시판</caption>
+		<colgroup>
+			<col width='8%' />
+			<col width='*%' />
+			<col width='15%' />
+			<col width='15%' />
+		</colgroup>
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>등록자</th>
+				<th>등록일</th>
+			</tr>
+		</thead>
+		<tbody class="data-container"></tbody>
+	</table>
+	<div id="pagination"></div>
+</section>
+</body>
+</html>

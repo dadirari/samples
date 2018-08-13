@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<title>Notice</title>
+</head>
+<body>
+<section layout:fragment="content">
+	<form name="form1" action="/notice/save" method="post">
+		<table border="1" style="width: 600px">
+			<caption>게시판</caption>
+			<colgroup>
+				<col width='15%' />
+				<col width='*%' />
+			</colgroup>
+			<tbody>
+				<tr>
+					<td>작성자</td>
+					<td><input type="text" name="brdWriter" size="20"
+						maxlength="20" th:value="${row.brdWriter}"></td>
+				</tr>
+				<tr>
+					<td>제목</td>
+					<td><input type="text" name="brdTitle" size="70"
+						maxlength="250" th:value="${row.brdTitle}"></td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td><textarea name="brdMemo" rows="5" cols="60" th:text="${row.brdMemo}"></textarea></td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="javascript:void(0);" onclick="form1.submit()">저장</a> 
+		<input type="hidden" name="brdNo" th:value="${row.brdNo}">
+	</form>
+</section>
+</body>
+</html>

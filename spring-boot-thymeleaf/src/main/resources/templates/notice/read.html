@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<title>Notice</title>
+</head>
+<body>
+<section layout:fragment="content">
+	<table border="1" style="width: 600px">
+		<caption>Notice</caption>
+		<colgroup>
+			<col width='15%' />
+			<col width='*%' />
+		</colgroup>
+		<tbody>
+			<tr>
+				<td>작성자</td>
+				<td th:text="${row.brdWriter}"></td>
+			</tr>
+			<tr>
+				<td>제목</td>
+				<td th:text="${row.brdTitle}"></td>
+			</tr>
+			<tr>
+				<td>내용</td>
+				<td th:text="${row.brdMemo}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<a href="javascript:void(0);" onclick="history.back(-1)">돌아가기</a>
+	<a th:href="@{/notice/delete?brdNo={brdNo}(brdNo=${row.brdNo})}">삭제</a>
+	<a th:href="@{/notice/form?brdNo={brdNo}(brdNo=${row.brdNo})}">수정</a>
+</section>
+</body>
+</html>

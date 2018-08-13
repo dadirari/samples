@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice">
+	<select id="list" resultType="kr.co.app.notice.vo.NoticeVO">
+		SELECT 
+			BRDNO
+			, BRDTITLE
+			, BRDWRITER
+			, BRDDATE
+		FROM NOTICE
+		ORDER BY BRDDATE DESC
+	</select>
+	
+	<select id="read" parameterType="int" resultType="kr.co.app.notice.vo.NoticeVO">
+		SELECT 
+			BRDNO
+			, BRDTITLE
+			, BRDMEMO
+			, BRDWRITER
+			, BRDDATE
+		FROM NOTICE
+		WHERE BRDNO = #{brdNo}
+	</select>
+	
+	<insert id="insert" parameterType="kr.co.app.notice.vo.NoticeVO">
+		INSERT INTO NOTICE(BRDTITLE, BRDMEMO, BRDWRITER, BRDDATE) 
+		VALUES(#{brdTitle}, #{brdMemo}, #{brdWriter}, NOW())
+	</insert>
+	
+	<update id="update" parameterType="kr.co.app.notice.vo.NoticeVO">
+		UPDATE NOTICE SET 
+			BRDTITLE = #{brdTitle}
+			, BRDMEMO = #{brdMemo}
+			, BRDWRITER = #{brdWriter}
+		WHERE BRDNO = #{brdNo}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM NOTICE WHERE BRDNO = #{brdNo}
+	</delete>
+</mapper>
