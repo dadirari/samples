@@ -1,0 +1,43 @@
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+    time-zone: Asia/Seoul
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:31001/postgres
+    username: sample
+    password: 'sample'
+    minimum-pool-size: 1
+    maximum-pool-size: 1
+    platform: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        default_schema: test
+  data:
+    rest:
+      default-page-size: 1000
+
+
+server:
+  port: 9292
+
+
+logging:
+  level:
+    root: info
+    com.sample: debug
+    org:
+      hibernate:
+        type:
+          descriptor:
+           sql: trace
