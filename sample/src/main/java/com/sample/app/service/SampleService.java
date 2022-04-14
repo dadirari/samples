@@ -55,12 +55,11 @@ public class SampleService {
 
     public Map<String, Page<Order>> selects(final Predicate predicate, final Pageable pageable) {
         final Map<String, Page<Order>> maps = new LinkedHashMap<>();
-        maps.put("normal",   this.orderRepository.findAll(predicate, pageable));
-        maps.put("JPQL",     this.orderRepository.findAllByQueryOrderByIdDesc(pageable));
+        maps.put("normal", this.orderRepository.findAll(predicate, pageable));
+        maps.put("JPQL",   this.orderRepository.findAllByQueryOrderByIdDesc(pageable));
         final QOrder order = QOrder.order;
-        final List<Order> queryDSL = this.jpaQueryFactory.from(order).select(order)
-                .orderBy(order.id.desc()).offset(pageable.getOffset())
-                .limit(pageable.getPageSize()).fetch();
+        final List<Order> queryDSL = this.jpaQueryFactory.from(order).select(order).orderBy(order.id.desc())
+                .offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
         maps.put("QueryDSL", new PageImpl<>(queryDSL, pageable, queryDSL.size()));
         log.debug("normal  : {}", maps.get("normal"));
         log.debug("JPQL    : {}", maps.get("JPQL"));
@@ -70,11 +69,10 @@ public class SampleService {
 
     public Map<String, Order> select(final Long id) {
         final Map<String, Order> maps = new LinkedHashMap<>();
-        maps.put("normal",  this.orderRepository.findById(id).orElseGet(Order::new));
-        maps.put("JPQL",    this.orderRepository.findByIdByQuery(id).orElseGet(Order::new));
+        maps.put("normal", this.orderRepository.findById(id).orElseGet(Order::new));
+        maps.put("JPQL",   this.orderRepository.findByIdByQuery(id).orElseGet(Order::new));
         final QOrder order = QOrder.order;
-        final Order queryDSL = this.jpaQueryFactory.from(order).select(order)
-                .where(order.id.eq(id)).fetchOne();
+        final Order queryDSL = this.jpaQueryFactory.from(order).select(order).where(order.id.eq(id)).fetchOne();
         maps.put("QueryDSL", queryDSL);
         log.debug("normal  : {}", maps.get("normal"));
         log.debug("JPQL    : {}", maps.get("JPQL"));
